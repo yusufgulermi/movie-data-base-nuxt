@@ -32,33 +32,12 @@
 </template>
 
 <script setup>
-    import axios from 'axios';
     import CardTemplate from '../components/CardTemplate.vue';
-    import { HEADER, PAYLOADS } from '../enums/MovieData';
 
     let fetchedData = ref([]);
     let isActive = ref({})
 
-    const fetchData = async(url, order) => {
-        let config = {
-            method: 'get',
-            maxBodyLength: 2,
-            url: url,
-            headers: HEADER
-        };
+    const { data } = await useFetch('/api/movie');
 
-        await axios.request(config)
-        .then((response) => {
-            fetchedData.value = response.data.results;
-            isActive.value = {};
-            isActive.value[order] = true
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-    };
-
-    onBeforeMount(async() => {
-        fetchData(PAYLOADS.MOST_POPULAR, 'first')
-    });
+    fetchedData = data._rawValue.results;
 </script>
