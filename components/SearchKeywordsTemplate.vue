@@ -13,7 +13,7 @@
 
 <script setup>
     defineProps({
-        title:String,
+        title: String,
         name: String,
         media: String,
     });

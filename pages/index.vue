@@ -12,15 +12,15 @@
             <p class="text-2xl font-semibold">Show Case</p> 
             <div class="m-5 flex rounded-full border-[1px] border-solid border-black w-max">
                 <button 
-                @click="fetchData(PAYLOADS.MOST_POPULAR, 'first')" 
+                @click="switchData('mp', 'first')" 
                 class="w-40 h-10 relative"
-                v-bind:class="{'button-change': isActive?.first}">
+                :class="{'button-change': isActive.list?.first}">
                     Most Popular
                 </button>
                 <button 
-                @click="fetchData(PAYLOADS.TOP_RATED, 'second')" 
+                @click="switchData('tp', 'second')" 
                 class="w-40 h-10 relative"
-                v-bind:class="{'button-change': isActive?.second}">
+                :class="{'button-change': isActive.list?.second}">
                     Top Rated
                 </button>
             </div>
@@ -34,10 +34,30 @@
 <script setup>
     import CardTemplate from '../components/CardTemplate.vue';
 
-    let fetchedData = ref([]);
-    let isActive = ref({})
+    const nuxtApp = useNuxtApp();
+    const fetchedData = reactive({
+        list: [],
+    });
+    let isActive = reactive({
+        list: {
+            first: true,
+        },
+    })
 
-    const { data } = await useFetch('/api/movie');
+    const { data } = await useFetch('/api/movie', {
+        getCachedData(key) {
+            return nuxtApp.payload.data[key] || nuxtApp.static.data[key]
+        }
+    });
 
-    fetchedData = data._rawValue.results;
+    const switchData = (endpoint, status) =>{
+        fetchedData.list = data._rawValue[endpoint];
+
+        isActive.list = {};
+        isActive.list[status] = true;
+    }
+
+    onMounted(() => {
+        fetchedData.list = data._rawValue.mp;
+    })
 </script>

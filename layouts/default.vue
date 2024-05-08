@@ -30,9 +30,9 @@
                     </span>
                     <input @input="searchKeywords" class="h-8 w-full outline-none rounded-sm text-sm text-black bg-search-grey pr-3.5 pl-7 border-gray-400 border-solid border-2" placeholder="Search">
                 </div>
-                <div v-if="filteredData.length > 0" class="absolute top-16 z-10 bg-white text-black max-h-[250px] overflow-y-scroll w-full left-0">
+                <div v-if="filteredData.value.length > 0" class="absolute top-16 z-10 bg-white text-black max-h-[250px] overflow-y-scroll w-full left-0">
                     <SearchKeywordsTemplate
-                        v-for="card in filteredData" 
+                        v-for="card in filteredData.value" 
                         :key="card.id" 
                         :title="card.title"
                         :name="card.name"
@@ -57,35 +57,27 @@
 </template>
 
 <script setup>
-    import axios from 'axios';
     import SearchKeywordsTemplate from '../components/SearchKeywordsTemplate.vue';
-    import { HEADER, PAYLOADS } from '../enums/MovieData';
     import debounce from 'debounce';
-
-    let filteredData = ref([]);
-
-    const getSearchData = async(url) => {
-        let config = {
-            method: 'get',
-            maxBodyLength: 2,
-            url: url,
-            headers: HEADER
-        };
-
-        await axios.request(config)
-        .then((response) => {
-            filteredData.value = response.data.results;
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-    };
     
+    let filteredData = reactive({
+        value: []
+    });
+
+    const getSearchData = async(endPoint) => {
+        return await $fetch(`https://api.themoviedb.org/3/search/multi?query=${ endPoint }`, {
+            headers: {
+                'Authorization': import.meta.env.VITE_MOVIE_TOKEN,
+                'accept': 'application/json',
+            },
+        });
+    }
+
     const searchKeywords = debounce(async(event) => {
         if (event.target.value.length >= 3) {
-                await getSearchData(PAYLOADS.SEARCH + event.target.value)
+            filteredData.value = (await getSearchData(event.target.value)).results
         } else {
             filteredData.value = [];
         }
-    }, 500)
+    }, 500);
 </script>

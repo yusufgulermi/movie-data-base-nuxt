@@ -1,11 +1,11 @@
 <template>
     <div
         class="relative flex justify-between items-center flex-col min-w-52"
-        v-for="card in fetchedData"
+        v-for="card in fetchedData.list"
         :key="card.id">
         <img @click="updateFavoriteState(card.id)"
             class="absolute top-6 right-6 w-5 h-5 rounded-full bg-[#fff] opacity-90 p-[1px] cursor-pointer"
-            v-bind:class="{'bg-[#FFFF00]': favoriteStore.favorite[card.id]}"
+            :class="{'!bg-[#FFFF00]': favoriteStore.favorite[card.id]}"
             src="/public/star.png">
         <img class="rounded-[50px] mb-2" :src="'https://media.themoviedb.org/t/p/w220_and_h330_face' + card.poster_path">
         <div class="flex items-center h-10 justify-center text-center font-extrabold">
