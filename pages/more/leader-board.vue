@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p>asdad</p>
+        <p>now</p>
     </div>
 </template>
 
