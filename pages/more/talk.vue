@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p>top-rated</p>
+        <p>We will get back soon</p>
     </div>
 </template>
 

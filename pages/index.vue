@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="flex overflow-x-scroll relative mx-10 gap-4">
-            <CardTemplate :fetchedData="fetchedData"/>
+            <CardTemplate :fetchedData="fetchedData.list"/>
         </div>
     </main>
 </template>

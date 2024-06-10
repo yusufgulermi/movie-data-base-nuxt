@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p>now</p>
+        <p>We will get back soon</p>
     </div>
 </template>
 

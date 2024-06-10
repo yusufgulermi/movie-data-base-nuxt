@@ -1,5 +1,5 @@
 <template>
-    <div class="flex gap-10 bg-[#242E34] text-white flex-col">
+    <div class="flex gap-10 bg-[#032541] text-white flex-col h-[64px] justify-center shadow-xl">
         <nav class="flex gap-10 justify-between w-full">
             <div class="flex gap-10 items-center pl-5">
                 <a href="/"><img src="/public/logo.png" width="50" height="50" /></a>
@@ -58,7 +58,7 @@
                     </span>
                     <input @input="searchKeywords" class="h-8 w-full outline-none rounded-sm text-sm text-black bg-search-grey pr-3.5 pl-7 border-gray-400 border-solid border-2" placeholder="Search">
                 </div>
-                <div v-if="filteredData.value.length > 0" class="absolute top-16 z-10 bg-white text-black max-h-[250px] overflow-y-scroll w-full left-0">
+                <div v-if="filteredData.value.length > 0" class="absolute top-16 z-10 bg-white text-black max-h-[250px] overflow-y-scroll w-[90%] left-[50%] border-[1px] border-[#00000070] rounded-lg -translate-x-[50%] shadow-lg">
                     <SearchKeywordsTemplate
                         v-for="card in filteredData.value" 
                         :key="card.id" 
