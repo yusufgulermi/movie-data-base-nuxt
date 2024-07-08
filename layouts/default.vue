@@ -1,10 +1,10 @@
 <template>
-    <div class="flex gap-10 bg-[#032541] text-white flex-col h-[64px] justify-center shadow-xl">
-        <nav class="flex gap-10 justify-between w-full">
-            <div class="flex gap-10 items-center pl-5">
-                <a href="/"><img src="/public/logo.png" width="50" height="50" /></a>
+    <div class="flex gap-10 bg-[#032541] text-white h-[64px] justify-center shadow-[0px_0px_30px_0px_#BE1136]">
+        <nav class="flex gap-10 justify-between w-[1400px]">
+            <div class="flex gap-8 items-center pl-5">
+                <a class="w-[100px]" href="/"><img src="/_nuxt/public/logo.png"/></a>
                 <div class="group relative cursor-pointer h-full content-center">
-                    Movies
+                    <span class="font-medium">Movies</span>
                     <div class="absolute flex item-center justify-center z-10 flex-col bg-[#fff] text-black rounded w-[170px] py-2 gap-2 top-12 hidden group-hover:flex shadow-lg shadow-black">
                         <NuxtLink to="/movie/popular" class="!pl-6 hover:bg-[#d7c5f7]">Popular</NuxtLink>
                         <NuxtLink to="/movie/now-playing" class="!pl-6 hover:bg-[#d7c5f7]">Now Playing</NuxtLink>
@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="group relative cursor-pointer h-full content-center">
-                    TV Shows
+                    <span class="font-medium">TV Shows</span>
                     <div class="absolute flex item-center justify-center z-10 flex-col bg-[#fff] text-black rounded w-[170px] py-2 gap-2 top-12 hidden group-hover:flex shadow-lg shadow-black">
                         <NuxtLink to="/tv/popular" class="!pl-6 hover:bg-[#d7c5f7]">Popular</NuxtLink>
                         <NuxtLink to="/tv/airing-today" class="!pl-6 hover:bg-[#d7c5f7]">Airing Today</NuxtLink>
@@ -22,32 +22,13 @@
                     </div>
                 </div>
                 <div class="group relative cursor-pointer h-full content-center">
-                    People
+                    <span class="font-medium">People</span>
                     <div class="absolute flex item-center justify-center z-10 flex-col bg-[#fff] text-black rounded w-[170px] py-2 gap-2 top-12 hidden group-hover:flex shadow-lg shadow-black">
-                        <NuxtLink to="/person" class="!pl-6 hover:bg-[#d7c5f7]">Popular People</NuxtLink>
-                    </div>
-                </div>
-                <div class="group relative cursor-pointer h-full content-center">
-                    More
-                    <div class="absolute flex item-center justify-center z-10 flex-col bg-[#fff] text-black rounded w-[170px] py-2 gap-2 top-12 hidden group-hover:flex shadow-lg shadow-black">
-                        <NuxtLink to="/more/discuss" class="!pl-6 hover:bg-[#d7c5f7]">Discussions</NuxtLink>
-                        <NuxtLink to="/more/leader-board" class="!pl-6 hover:bg-[#d7c5f7]">Leader Board</NuxtLink>
-                        <NuxtLink to="/more/talk" class="!pl-6 hover:bg-[#d7c5f7]">Support</NuxtLink>
-                        <NuxtLink to="/more/docs" class="!pl-6 hover:bg-[#d7c5f7]">API</NuxtLink>
+                        <NuxtLink to="/person/people" class="!pl-6 hover:bg-[#d7c5f7]">Popular People</NuxtLink>
                     </div>
                 </div>
             </div>
             <div class="flex gap-5 items-center mr-5">
-                <div class="flex items-center justify-center text-white bg-[#0C66E4] gap-1 cursor-pointer rounded text-sm py-1.5 pr-2.5 p-1.5">
-                    <span class="flex items-center justify-center">
-                        <svg width="24" height="24" viewBox="0 0 24 24" role="presentation">
-                            <path d="M13 11V7a1 1 0 00-2 0v4H7a1 1 0 000 2h4v4a1 1 0 002 0v-4h4a1 1 0 000-2h-4z"
-                                fill="currentColor" fill-rule="evenodd">
-                            </path>
-                        </svg>
-                    </span>
-                    <span>Create</span>
-                </div>
                 <div class="relative w-max">
                     <span class="absolute w-4 h-4 text-white top-2 left-2">
                         <svg class="w-4 h-4 text-black" width="24" height="24" viewBox="0 0 24 24" role="presentation">
@@ -56,16 +37,10 @@
                             </path>
                         </svg>
                     </span>
-                    <input @input="searchKeywords" class="h-8 w-full outline-none rounded-sm text-sm text-black bg-search-grey pr-3.5 pl-7 border-gray-400 border-solid border-2" placeholder="Search">
+                    <input @input="searchKeywords" class="search-input h-8 w-full outline-none rounded-sm text-sm text-black bg-search-grey pr-3.5 pl-7 border-gray-400 border-solid border-2" placeholder="Search">
                 </div>
                 <div v-if="filteredData.value.length > 0" class="absolute top-16 z-10 bg-white text-black max-h-[250px] overflow-y-scroll w-[90%] left-[50%] border-[1px] border-[#00000070] rounded-lg -translate-x-[50%] shadow-lg">
-                    <SearchKeywordsTemplate
-                        v-for="card in filteredData.value" 
-                        :key="card.id" 
-                        :title="card.title"
-                        :name="card.name"
-                        :media="card.media_type"
-                    />
+                    <SearchKeywordsTemplate :filteredData="filteredData.value" @closeSearchResult="closeSearchBox"/>
                 </div>
                 <div class="flex items-center cursor-pointer hover:rounded-full hover:bg-gray-400">
                     <svg width="24" height="24" viewBox="0 0 24 24" role="presentation">
@@ -88,33 +63,39 @@
             </div>
         </nav>
     </div>
-    <div>
+    <div class="flex justify-center">
         <slot />
     </div>
+    <div class="b-0 w-full h-[100px] bg-[#032541] mt-10 shadow-[0px_0px_30px_0px_#BE1136]"></div>
 </template>
 
 <script setup>
     import SearchKeywordsTemplate from '../components/SearchKeywordsTemplate.vue';
     import debounce from 'debounce';
-    
+
+    const nuxtApp = useNuxtApp();
     let filteredData = reactive({
         value: []
     });
 
     const getSearchData = async(endPoint) => {
-        return await $fetch(`https://api.themoviedb.org/3/search/multi?query=${ endPoint }`, {
-            headers: {
-                'Authorization': import.meta.env.VITE_MOVIE_TOKEN,
-                'accept': 'application/json',
-            },
+        return await useFetch(`/api/search/${ endPoint }`, {
+            getCachedData(key) {
+                return nuxtApp.payload.data[key] || nuxtApp.static.data[key]
+            }
         });
     }
 
     const searchKeywords = debounce(async(event) => {
         if (event.target.value.length >= 3) {
-            filteredData.value = (await getSearchData(event.target.value)).results
+            filteredData.value = (await getSearchData(event.target.value)).data._rawValue.results;
         } else {
             filteredData.value = [];
         }
     }, 500);
+
+    const closeSearchBox = (selector) => {
+        document.querySelector(selector).value = '';
+        filteredData.value = [];
+    };
 </script>

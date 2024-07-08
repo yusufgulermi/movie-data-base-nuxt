@@ -20,20 +20,21 @@
     }
 
     ::-webkit-scrollbar {
-        height: 10px;
+        height: 8px;
+        width: 8px;
     }
 
     ::-webkit-scrollbar-track {
-        border-radius: 10px;
+        border-radius: 4px;
     }
 
     ::-webkit-scrollbar-thumb {
-        background: #0C66E4;
-        border-radius: 10px;
+        background: #9c9c9c;
+        border-radius: 4px;
     }
 
     .button-change {
-        background-color: #0C66E4;
+        background-color: #032541;
         border-radius: 9999px;
         color: white;
     }
@@ -52,4 +53,7 @@
         border-color: #01b4e4 !important;
     }
 
+    .custom-background {
+        background-image: linear-gradient(to right, #ACAAC7 calc((50vw - 170px) - 340px), #2D2D33B0 50%, #2F2F3BD6 100%)
+    }
 }

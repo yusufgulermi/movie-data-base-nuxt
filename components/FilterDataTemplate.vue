@@ -79,7 +79,7 @@
                     </div>
                 </div>
                 <div v-if="fetchedData.list.length" class="flex overflow-x-scroll relative gap-4 flex-wrap w-9/12 flex h-[max-content] pl-[30px]">
-                    <CardTemplate :fetchedData="fetchedData.list"/>
+                    <CardTemplate :fetchedData="fetchedData.list" :type="type"/>
                 </div>
                 <div v-else class="w-[calc(100vw-800px)] pl-[30px]">There is no data.</div>
             </div>
@@ -135,31 +135,29 @@
     }
 
     const filterData = async() => {
-        filterEndPoint.genres = '';
-        filterEndPoint.providers = '';
+        let { genres, providers } = filterEndPoint;
+        genres = '';
+        providers = '';
 
         document.querySelectorAll('#genres-id li .selected').forEach((e) => {
-            filterEndPoint.genres += `${e.getAttribute('data-value')},`
+            genres += `${e.getAttribute('data-value')},`
         });
         
         document.querySelectorAll('#providers-id .selected').forEach((e) => {
-            filterEndPoint.providers += `${e.getAttribute('data-value')}|`
+            providers += `${e.getAttribute('data-value')}|`
         });
 
-        endPoint = `sort_by=${ document.querySelector('#filter').value }&with_genres=${ filterEndPoint
-        .genres }&release_date.lte=${document.querySelector('#end-date')
-        .textContent}&with_watch_providers=${ filterEndPoint.providers}`;
+        endPoint = `sort_by=${ document.querySelector('#filter')
+            .value }&with_genres=${ genres }&release_date.lte=${ document.querySelector('#end-date')
+            .textContent}&with_watch_providers=${ providers }`;
 
         fetchedData.list = (await getSearchData(endPoint)).results;
-        fetchedData.providers = (await getProviders()).results;
-        fetchedData.genres = (await getGenres()).genres;
     }
+
     onMounted(async() => {
         fetchedData.list = (await getSearchData(endPoint)).results;
         fetchedData.providers = (await getProviders()).results;
         fetchedData.genres = (await getGenres()).genres;
-
-        console.log(fetchedData)
     })
 </script>
 
