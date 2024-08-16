@@ -2,7 +2,7 @@
     <div class="flex gap-10 bg-[#032541] text-white h-[64px] justify-center shadow-[0px_0px_30px_0px_#BE1136]">
         <nav class="flex gap-10 justify-between w-[1400px]">
             <div class="flex gap-8 items-center pl-5">
-                <a class="w-[100px]" href="/"><img src="/_nuxt/public/logo.png"/></a>
+                <a class="w-[100px]" href="/"><img src="/public/logo.png"/></a>
                 <div class="group relative cursor-pointer h-full content-center">
                     <span class="font-medium">Movies</span>
                     <div class="absolute flex item-center justify-center z-10 flex-col bg-[#fff] text-black rounded w-[170px] py-2 gap-2 top-12 hidden group-hover:flex shadow-lg shadow-black">
@@ -39,7 +39,7 @@
                     </span>
                     <input @input="searchKeywords" class="search-input h-8 w-full outline-none rounded-sm text-sm text-black bg-search-grey pr-3.5 pl-7 border-gray-400 border-solid border-2" placeholder="Search">
                 </div>
-                <div v-if="filteredData.value.length > 0" class="absolute top-16 z-10 bg-white text-black max-h-[250px] overflow-y-scroll w-[90%] left-[50%] border-[1px] border-[#00000070] rounded-lg -translate-x-[50%] shadow-lg">
+                <div v-if="filteredData.value?.length > 0" class="absolute top-16 z-10 bg-white text-black max-h-[250px] overflow-y-scroll w-[90%] left-[50%] border-[1px] border-[#00000070] rounded-lg -translate-x-[50%] shadow-lg">
                     <SearchKeywordsTemplate :filteredData="filteredData.value" @closeSearchResult="closeSearchBox"/>
                 </div>
                 <div class="flex items-center cursor-pointer hover:rounded-full hover:bg-gray-400">
@@ -88,7 +88,7 @@
 
     const searchKeywords = debounce(async(event) => {
         if (event.target.value.length >= 3) {
-            filteredData.value = (await getSearchData(event.target.value)).data._rawValue.results;
+            filteredData.value = (await getSearchData(event.target.value)).data._rawValue?.results;
         } else {
             filteredData.value = [];
         }
