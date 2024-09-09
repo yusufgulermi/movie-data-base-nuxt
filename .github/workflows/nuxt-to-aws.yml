@@ -27,4 +27,4 @@ jobs:
           REMOTE_USER: ${{ secrets.AWS_EC2_DEPLOY_USER }}
           REMOTE_PORT: ${{ secrets.AWS_EC2_DEPLOY_PORT }}
           SOURCE: ".output/"
-          TARGET: "/home/ec2-user/nuxt-to-aws/.output"
+          TARGET: "/home/ubuntu/nuxt-to-aws/.output"
