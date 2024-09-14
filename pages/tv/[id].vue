@@ -77,8 +77,9 @@
 </template>
 
 <script setup>
-    const { id } = useRoute().params;
+    import { useHead } from '@vueuse/head';
 
+    const { id } = useRoute().params;
     const nuxtApp = useNuxtApp();
     let fetchedData = reactive({
         list:[],
@@ -111,8 +112,12 @@
         });
     }
 
-    onMounted(async() => {
+    onMounted(() => {
         fetchedData.list = data._rawValue;
         setTimeout(()=>createVoteCanvas(), 100);
+    });
+
+    useHead({
+      title: 'Wacu - Tv Series'
     });
 </script>

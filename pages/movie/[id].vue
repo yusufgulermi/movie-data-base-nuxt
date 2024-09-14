@@ -80,6 +80,8 @@
 </template>
 
 <script setup>
+    import { useHead } from '@vueuse/head';
+
     const { id } = useRoute().params;
     const nuxtApp = useNuxtApp();
     let fetchedData = reactive({
@@ -113,8 +115,12 @@
         });
     }
 
-    onMounted(async() => {
+    onMounted(() => {
         fetchedData.list = data._rawValue;
         setTimeout(()=>createVoteCanvas(), 100);
+    });
+
+    useHead({
+      title: 'Wacu - Movie'
     });
 </script>

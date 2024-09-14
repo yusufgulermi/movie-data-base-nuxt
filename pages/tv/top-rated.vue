@@ -8,4 +8,9 @@
 
 <script setup>
     import FilterDataTemplate from '../../components/FilterDataTemplate.vue';
+    import { useHead } from '@vueuse/head';
+
+    useHead({
+      title: 'Wacu - Top Rated Tv Series'
+    });
 </script>

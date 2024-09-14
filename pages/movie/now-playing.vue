@@ -8,6 +8,7 @@
 
 <script setup>
     import FilterDataTemplate from '../../components/FilterDataTemplate.vue';
+    import { useHead } from '@vueuse/head';
 
     let start = new Date();
     let end = new Date(start);
@@ -16,4 +17,8 @@
 
     const currentTime = start.toISOString().split('T')[0];
     const pastTime = end.toISOString().split('T')[0];
+
+    useHead({
+      title: 'Wacu - Now Playing Movies'
+    });
 </script>

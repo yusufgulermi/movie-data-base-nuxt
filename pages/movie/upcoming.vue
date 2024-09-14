@@ -7,6 +7,9 @@
 </template>
 
 <script setup>
+    import { useHead } from '@vueuse/head';
+    import FilterDataTemplate from '../../components/FilterDataTemplate.vue';
+
     let start = new Date();
     let end = new Date(start);
 
@@ -15,5 +18,8 @@
     const currentTime = start.toISOString().split('T')[0];
     const endTime = end.toISOString().split('T')[0];
 
-    import FilterDataTemplate from '../../components/FilterDataTemplate.vue';
+
+    useHead({
+      title: 'Wacu - Upcoming Movies'
+    });
 </script>

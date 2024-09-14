@@ -58,6 +58,8 @@
 </template>
 
 <script setup>
+    import { useHead } from '@vueuse/head';
+
     const { id } = useRoute().params;
     const nuxtApp = useNuxtApp();
     let fetchedData = reactive({
@@ -70,8 +72,11 @@
         }
     });
 
-    onMounted(async() => {
+    onMounted(() => {
         fetchedData.list = data._rawValue;
-        console.log(fetchedData.list)
+    });
+
+    useHead({
+      title: 'Wacu - Person'
     });
 </script>

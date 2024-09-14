@@ -21,8 +21,9 @@
 </template>
 
 <script setup>
-    const nuxtApp = useNuxtApp();
+    import { useHead } from '@vueuse/head';
 
+    const nuxtApp = useNuxtApp();
     const personData = reactive({
         list: [],
     });
@@ -35,5 +36,9 @@
 
     onMounted(() => {
         personData.list = data._rawValue.results
-    })
+    });
+
+    useHead({
+      title: 'Wacu - People'
+    });
 </script>

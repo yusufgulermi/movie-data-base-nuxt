@@ -16,13 +16,15 @@
                         <span class="px-[10px] text-[16px]">{{ search?.overview }}</span>
                     </div>
                 </div>
-                </li>
-            </ul>
-        </div>
+            </li>
+        </ul>
     </div>
+</div>
 </template>
 
 <script setup>
+    import { useHead } from '@vueuse/head';
+
     const { keywords } = useRoute().params;
     const nuxtApp = useNuxtApp();
     const searchData = reactive({
@@ -37,6 +39,10 @@
 
     onMounted(() => {
         searchData.list = data._rawValue.results;
-        console.log(searchData.list)
-    })
+    });
+
+    
+    useHead({
+      title: `Wacu - ${ keywords }`
+    });
 </script>

@@ -54,6 +54,7 @@
 
 <script setup>
     import CardTemplate from '../components/CardTemplate.vue';
+    import { useHead } from '@vueuse/head';
 
     const nuxtApp = useNuxtApp();
     const fetchedData = reactive({
@@ -93,5 +94,10 @@
     onMounted(() => {
         fetchedData.movieList = data._rawValue.pm.results;
         fetchedData.tvList = data._rawValue.pt.results;
-    })
+    });
+
+    useHead({
+      title: 'Wacu - Home'
+    });
+
 </script>
