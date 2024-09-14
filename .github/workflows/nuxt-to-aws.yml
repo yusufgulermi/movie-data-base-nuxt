@@ -29,6 +29,7 @@ jobs:
           SOURCE: ".output/"
           TARGET: "/home/ubuntu/nuxt-to-aws/.output"
 
+
       # - name: Check and Install PM2 if Not Installed
       #   uses: appleboy/ssh-action@master
       #   with:
