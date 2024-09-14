@@ -4,5 +4,10 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
-  ]
+  ],
+  runtimeConfig: {
+    public: {
+      secret: import.meta.env.VITE_MOVIE_TOKEN,
+    }
+  }
 })
