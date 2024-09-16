@@ -108,33 +108,18 @@
         genres: '',
         providers: '',
     });
-    
-    const token = useRuntimeConfig();
 
-    const payloadHeader = {
-        headers: {
-            'Authorization': token.public.secret,
-            'accept': 'application/json',
-        }
-    }
-    console.log(payloadHeader);
 
-    const getSearchData = async(endPoint) => {
-        return await $fetch(`https://api.themoviedb.org/3/discover/${ type }?page=1&with_runtime.gt=0&with_runtime.lte=400&vote_average.lte=10&vote_count.gte=0&vote_average.gte=0&${ endPoint }`,
-            payloadHeader
-        );
+    const getSearchData = async(endPoint, type) => {
+        return await useFetch(`/api/search/${ type }/${ endPoint }`);
     }
 
-    const getProviders = async() => {
-        return await $fetch(`https://api.themoviedb.org/3/watch/providers/${ type }?watch_region=us`,
-            payloadHeader
-        );
+    const getProviders = async(type) => {
+        return await useFetch(`/api/providers/${ type }`);
     }
 
-    const getGenres = async() => {
-        return await $fetch(`https://api.themoviedb.org/3/genre/${ type }/list?language=en`,
-            payloadHeader
-        );
+    const getGenres = async(type) => {
+        return await useFetch(`/api/genres/${ type }`);
     }
 
     const filterData = async() => {
@@ -154,13 +139,15 @@
             .value }&with_genres=${ genres }&release_date.lte=${ document.querySelector('#end-date')
             .textContent}&with_watch_providers=${ providers }`;
 
-        fetchedData.list = (await getSearchData(endPoint)).results;
+        fetchedData.list = (await getSearchData(endPoint, type)).data._rawValue.results;
     }
 
-    onMounted(async() => {
-        fetchedData.list = (await getSearchData(endPoint)).results;
-        fetchedData.providers = (await getProviders()).results;
-        fetchedData.genres = (await getGenres()).genres;
+    onMounted(() => {
+        setTimeout(async() => {
+            fetchedData.list = (await getSearchData(endPoint, type)).data._rawValue.results,
+            fetchedData.providers = (await getProviders(type)).data._rawValue.results;
+            fetchedData.genres = (await getGenres(type)).data._rawValue.genres;
+        },10)
     })
 </script>
 
