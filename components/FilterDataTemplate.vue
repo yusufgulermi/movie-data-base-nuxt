@@ -79,7 +79,7 @@
                     </div>
                 </div>
                 <div v-if="fetchedData.list.length" class="flex overflow-x-scroll relative gap-4 flex-wrap w-9/12 flex h-[max-content] pl-[30px]">
-                    <CardTemplate :fetchedData="fetchedData.list" :type="type"/>
+                    <CardTemplate :fetchedData="fetchedData.list.filter(element => element.poster_path !== null)" :type="type"/>
                 </div>
                 <div v-else class="w-[calc(100vw-800px)] pl-[30px]">There is no data.</div>
             </div>
@@ -93,6 +93,7 @@
     import DatePicker from '../components/DatePickerTemplate.vue';
     import { CalendarDaysIcon, FilmIcon, CloudIcon } from '@heroicons/vue/24/solid';
 
+    const nuxtApp = useNuxtApp();
     const fetchedData = reactive({
         list: [],
         providers: [],
@@ -111,15 +112,15 @@
 
 
     const getSearchData = async(endPoint, type) => {
-        return await useFetch(`/api/search/${ type }/${ endPoint }`);
+        return await $fetch(`/api/search/${ type }/${ endPoint }`);
     }
 
     const getProviders = async(type) => {
-        return await useFetch(`/api/providers/${ type }`);
+        return await $fetch(`/api/providers/${ type }`);
     }
 
     const getGenres = async(type) => {
-        return await useFetch(`/api/genres/${ type }`);
+        return await $fetch(`/api/genres/${ type }`);
     }
 
     const filterData = async() => {
@@ -139,14 +140,14 @@
             .value }&with_genres=${ genres }&release_date.lte=${ document.querySelector('#end-date')
             .textContent}&with_watch_providers=${ providers }`;
 
-        fetchedData.list = (await getSearchData(endPoint, type)).data._rawValue.results;
+        fetchedData.list = (await getSearchData(endPoint, type))?.results;
     }
 
     onMounted(() => {
         setTimeout(async() => {
-            fetchedData.list = (await getSearchData(endPoint, type)).data._rawValue.results,
-            fetchedData.providers = (await getProviders(type)).data._rawValue.results;
-            fetchedData.genres = (await getGenres(type)).data._rawValue.genres;
+            fetchedData.list = (await getSearchData(endPoint, type))?.results,
+            fetchedData.providers = (await getProviders(type))?.results;
+            fetchedData.genres = (await getGenres(type))?.genres;
         },10)
     })
 </script>
